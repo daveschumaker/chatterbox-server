@@ -15,6 +15,10 @@ var port = 3000;
 var ip = "127.0.0.1";
 
 
+// We need to create a function that can handle a server requestion.
+var handleRequest = function (request, response) {
+  response.end('Hey, what do you know? It works!');
+};
 
 // We use node's http module to create a server.
 //
