@@ -6,42 +6,33 @@
     <link rel="stylesheet" href="styles/styles.css">
 
     <!-- dependencies -->
-    <script src="bower_components/underscore/underscore-min.js"></script>
     <script src="bower_components/jquery/jquery.min.js"></script>
-    <script src="bower_components/backbone/backbone-min.js"></script>
 
-    <!-- your scripts -->
+    <script src="bower_components/underscore/underscore-min.js"></script>
+        <!-- your scripts -->
     <script src="env/config.js"></script>
     <script src="scripts/app.js"></script>
-    <script src="scripts/add.js"></script>
-    <script src="scripts/fetch.js"></script>
   </head>
   <body>
-    <div id="main">
 
-      <a href="#" id="setUser">set username</a>&nbsp;&nbsp;
-      <a href="#" id="createRoom">create new room</a>&nbsp;&nbsp;
-
-      <select id='rooms'>
-        <option id='all'>All Rooms</option>
-      </select>
+    <script>
+      $(function(){
+        app.init();
+      });
+    </script>    <div id="main">
       <h1>chatterbox</h1>
-      
-      <div id="send">
-        <textarea id="message"></textarea>
-        <button class="submit">Submit</button>
-      </div>
-      
-      <div id="chats"></div>
+      <!-- Your HTML goes here! -->
 
-    </div>
-    <script type="text/javascript">
-      // var message = new Message();
-      var messages = new Messages();
-      // messages.fetch();
-      // var messageView = new MessageView({ model: message });
-      var messagesView = new MessagesView({ collection: messages });
-      messagesView.render();
-    </script>
+      <div class="spinner"><img src="images/spiffygif_46x46.gif"></div>
+      <div id="rooms">
+        Room:
+        <select id="roomSelect">
+        </select>
+      </div>
+      <form action="#" id="send" method="post">
+        <input type="text" name="message" id="message"/>
+        <input type="submit" name="submit" class="submit"/>
+      </form>
+      <div id="chats"></div>    </div>
   </body>
 </html>

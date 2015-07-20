@@ -45,6 +45,11 @@ var requestHandler = function(request, response) {
   // which includes the status and all headers.
   response.writeHead(statusCode, headers);
 
+  // TODO: Potentially implement URL routing and requesting handling here:
+  if (request.url === "/classes/messages") {
+    console.log('CONNECTED TO CLASSES MESSAGES!');
+  }
+
   // Make sure to always call response.end() - Node may not send
   // anything back to the client until you do. The string you pass to
   // response.end() will be the body of the response - i.e. what shows
@@ -52,7 +57,17 @@ var requestHandler = function(request, response) {
   //
   // Calling .end "flushes" the response's internal buffer, forcing
   // node to actually send all the data over to the client.
-  response.end("Hello, World!");
+
+  // Test responses from server as a JSON object.
+  var getResponse = {
+    name: 'dave',
+    message: 'Helllllo!'
+  };
+
+  getResponse = JSON.stringify(getResponse);
+
+  //TODO: Change this to our response object.
+  response.end(getResponse);
 };
 
 // These headers will allow Cross-Origin Resource Sharing (CORS).

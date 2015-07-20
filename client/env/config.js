@@ -1,7 +1,4 @@
-// YOU DO NOT NEED TO EDIT this code.
-//
-// All this is doing is inserting the parse API keys into every $.ajax
-// request that you make so you don't have to.
+//YOU DO NOT NEED TO EDIT this code.
 if (!/(&|\?)username=/.test(window.location.search)) {
   var newSearch = window.location.search;
   if (newSearch !== '' & newSearch !== '?') {
