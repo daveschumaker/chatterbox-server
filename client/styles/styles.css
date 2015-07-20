@@ -5,6 +5,10 @@ body {
     font-family: arial, sans-serif;
 }
 
+img {
+    max-width: 200px;
+}
+
 #main {
     width: 500px;
     margin: auto;
