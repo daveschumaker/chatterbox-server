@@ -1,6 +1,9 @@
 /* Import node's http module: */
 var http = require("http");
+
 //var request = require('request');
+
+
 
 // Import our request handler.
 var handleRequest = require('./request-handler');
@@ -22,6 +25,21 @@ var ip = "127.0.0.1";
 // The function we pass to http.createServer will be used to handle all
 // incoming requests.
 //
+
+/*
+fs.readFile('SpecRunner.html', function (err, html) {
+    if (err) {
+        throw err; 
+    }       
+    http.createServer(function(request, response) { 
+        response.writeHeader(200, {"Content-Type": "text/html"});  // <-- HERE!
+        response.write(html);  // <-- HERE!
+        response.end();  
+    }).listen(1337, '127.0.0.1');
+});
+*/
+
+
 // After creating the server, we will tell it to listen on the given port and IP. */
 var server = http.createServer(handleRequest);
 console.log("Listening on http://" + ip + ":" + port);
