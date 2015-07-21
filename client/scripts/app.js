@@ -5,31 +5,31 @@
 /////////////////////////////////////////////////////////////////////////////
 
 var Message = Backbone.Model.extend({
-  url: 'http://127.0.0.1:3000',
+  url: 'http://127.0.0.1:3000/classes/messages',
   defaults: {
-    username: ''
+    username: '',
+    roomname: 'lobby'
   }
 });
 
 var Messages = Backbone.Collection.extend({
   model: Message,
-  url: 'http://127.0.0.1:3000',
+  url: 'http://127.0.0.1:3000/classes/messages',
 
   loadMsgs: function(){
-    this.fetch({data: { order: '-createdAt' }});
+    this.fetch();
   },
 
   parse: function(response, options){
     //console.log(response);
     var results = [];
-    for (var key in response) {
-      results.push(response[key]);
-    }
-    console.log(response);
-    // for( var i = response.length-1; i >= 0; i-- ){
-    //   results.push(response[i]);
+    // for (var key in response) {
+    //   results.push(response[key]);
     // }
-    // console.log(results);
+    for( var i = response.results.length-1; i >= 0; i-- ){
+      results.push(response.results[i]);
+    }
+    console.log(results);
     return results;
   }
 });
@@ -52,7 +52,7 @@ var FormView = Backbone.View.extend({
     var $text = this.$('#message');
     this.collection.create({
       username: window.location.search.substr(10),
-      text: $text.val()
+      message: $text.val()
     });
     $text.val('');
   },
@@ -72,8 +72,8 @@ var FormView = Backbone.View.extend({
 var MessageView = Backbone.View.extend({
 
   template: _.template('<div class="chat" data-id="<%- objectId %>"> \
-                       <div class="user"><%- username %></div> \
-                       <div class="text"><%- text %></div> \
+                       <div class="username"><%- username %></div> \
+                       <div class="text"><%- message %></div> \
                        </div>'),
 
   render: function(){

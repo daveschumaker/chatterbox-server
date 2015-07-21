@@ -12,7 +12,11 @@ this file and include it in basic-server.js so that it actually works.
 
 **************************************************************/
 
-var messages = {results: []};
+var messages = {results: [{
+  objectId: 12345,
+  username: 'lulz',
+  message: 'hi there'
+}]};
 
 var makeID = function () {
     var text = "";
@@ -32,6 +36,14 @@ var requestHandler = function(request, response) {
 
   headers['Content-Type'] = "application/json";
   
+  if (request.method === 'OPTIONS') {
+    var statusCode = 200;
+    //request.on('end', function() {
+      response.writeHead(statusCode, headers);
+      response.end();
+    //});   
+  }
+
   if(request.method === 'POST' && URLs.indexOf(request.url) !== -1){ 
     var objectID = makeID();
     

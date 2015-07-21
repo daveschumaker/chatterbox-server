@@ -9,7 +9,7 @@ img {
     max-width: 200px;
 }
 
-#main {
+#main, .chat {
     width: 500px;
     margin: auto;
     text-align: left;
