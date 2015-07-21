@@ -12,7 +12,7 @@ this file and include it in basic-server.js so that it actually works.
 
 **************************************************************/
 
-var fakeChats = {};
+var messages = {results: []};
 
 var makeID = function () {
     var text = "";
@@ -56,21 +56,50 @@ var requestHandler = function(request, response) {
 
   // .writeHead() writes to the request line and headers of the response,
   // which includes the status and all headers.
-  response.writeHead(statusCode, headers);
+  
   if(request.method === 'POST'){ 
     var objectID = makeID();
-    var fakeChatObj = {
+    console.log('request method === post!');
+    
+    request.on('data', function(data){ 
+      console.log('DATA :D :D :D');
+
+      var obj = data.toString()
+      // var tempObj = {
+      //   objectId: objectID,
+      //   username: obj.username,
+      //   message: obj.message
+      // }
+      console.log(obj);
+      // messages.results.push(tempObj);
+    });
+
+    console.log('WHAAAAAATUP');
+    console.log(messages.results);    
+    var statusCode = 201;
+    
+    var superString = JSON.stringify(messages.results);
+    
+    request.on('end', function() {
+      response.writeHead(statusCode, headers);
+      response.end();
+    });
+
+
+    // console.log(request);
+    /*var fakeChatObj = {
       objectId: objectID,
       username: "ralph",
       text: "hello there", 
       roomname: 'lobby'
-    };
-    fakeChats[objectID] = fakeChatObj;
-    console.log(fakeChats);
+    };*/
+
   }
 
+
   if(request.method === 'GET'){ 
-    var stringified = JSON.stringify(fakeChats);
+    // fakeChats = JSON.stringify(fakeChats);
+    var stringified = JSON.stringify(messages);
     response.end(stringified);
   }
   // Make sure to always call response.end() - Node may not send
@@ -80,7 +109,7 @@ var requestHandler = function(request, response) {
   //
   // Calling .end "flushes" the response's internal buffer, forcing
   // node to actually send all the data over to the client.
-  response.end("Hello, World!");
+  //response.end("Hello, World!");
 };
 
 // These headers will allow Cross-Origin Resource Sharing (CORS).

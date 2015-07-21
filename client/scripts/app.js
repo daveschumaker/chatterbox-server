@@ -25,7 +25,7 @@ var Messages = Backbone.Collection.extend({
     for (var key in response) {
       results.push(response[key]);
     }
-
+    console.log(response);
     // for( var i = response.length-1; i >= 0; i-- ){
     //   results.push(response[i]);
     // }
