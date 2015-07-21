@@ -2,6 +2,7 @@ var handler = require('../request-handler');
 var expect = require('../../node_modules/chai/chai').expect;
 var basicServer = require('../basic-server').server;
 var stubs = require('./Stubs');
+var requestHandler = handler.requestHandler;
 
 // Conditional async testing, akin to Jasmine's waitsFor()
 // Will wait for test to be truthy before executing callback

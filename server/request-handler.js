@@ -28,7 +28,7 @@ var makeID = function () {
 var requestHandler = function(request, response) {
   console.log("Serving request type " + request.method + " for url " + request.url);
   var headers = defaultCorsHeaders;
-  var URLs = ["/classes/messages", "/classes/messages/send", "/send", "/send/classes/messages"];
+  var URLs = ["/classes/messages", "/classes/messages/send", "/send", "/send/classes/messages", "/classes/room1"];
 
   headers['Content-Type'] = "application/json";
   
