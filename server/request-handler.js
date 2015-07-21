@@ -24,7 +24,7 @@ var makeID = function () {
     return text;
 }
 
-
+exports = module.exports = {};
 var requestHandler = function(request, response) {
   console.log("Serving request type " + request.method + " for url " + request.url);
   var headers = defaultCorsHeaders;
@@ -81,4 +81,4 @@ var defaultCorsHeaders = {
   "access-control-max-age": 10 // Seconds.
 };
 
-exports = module.exports = requestHandler;
+exports.requestHandler = requestHandler;
