@@ -1,5 +1,13 @@
 // YOUR CODE HERE:
 
+var sanitize = function(input) {
+  var output = input.replace(/<script[^>]*?>.*?<\/script>/gi, '').
+  replace(/<[\/\!]*?[^<>]*?>/gi, '').
+  replace(/<style[^>]*?>.*?<\/style>/gi, '').
+  replace(/<![\s\S]*?--[ \t\n\r]*>/gi, '');
+  return output;
+};
+
 /////////////////////////////////////////////////////////////////////////////
 // Backbone-based Implementation of chatterbox client
 /////////////////////////////////////////////////////////////////////////////
@@ -27,9 +35,14 @@ var Messages = Backbone.Collection.extend({
     //   results.push(response[key]);
     // }
     for( var i = response.results.length-1; i >= 0; i-- ){
+
+      if(response.results[i].message.slice(-3) === 'gif' || response.results[i].message.slice(-3) === 'jpg') {
+        response.results[i].message = '<img src="'+response.results[i].message+'" />'; 
+      } else {
+        response.results[i].message = sanitize(response.results[i].message);
+      }
       results.push(response.results[i]);
     }
-    console.log(results);
     return results;
   }
 });
@@ -73,7 +86,7 @@ var MessageView = Backbone.View.extend({
 
   template: _.template('<div class="chat" data-id="<%- objectId %>"> \
                        <div class="username"><%- username %></div> \
-                       <div class="text"><%- message %></div> \
+                       <div class="text"><%= message %></div> \
                        </div>'),
 
   render: function(){
