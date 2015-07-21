@@ -12,6 +12,19 @@ this file and include it in basic-server.js so that it actually works.
 
 **************************************************************/
 
+var fakeChats = {};
+
+var makeID = function () {
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for( var i=0; i < 5; i++ )
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
+}
+
+
 var requestHandler = function(request, response) {
   // Request and Response come from node's http module.
   //
@@ -39,12 +52,27 @@ var requestHandler = function(request, response) {
   //
   // You will need to change this if you are sending something
   // other than plain text, like JSON or HTML.
-  headers['Content-Type'] = "text/plain";
+  headers['Content-Type'] = "application/json";
 
   // .writeHead() writes to the request line and headers of the response,
   // which includes the status and all headers.
   response.writeHead(statusCode, headers);
+  if(request.method === 'POST'){ 
+    var objectID = makeID();
+    var fakeChatObj = {
+      objectId: objectID,
+      username: "ralph",
+      text: "hello there", 
+      roomname: 'lobby'
+    };
+    fakeChats[objectID] = fakeChatObj;
+    console.log(fakeChats);
+  }
 
+  if(request.method === 'GET'){ 
+    var stringified = JSON.stringify(fakeChats);
+    response.end(stringified);
+  }
   // Make sure to always call response.end() - Node may not send
   // anything back to the client until you do. The string you pass to
   // response.end() will be the body of the response - i.e. what shows
