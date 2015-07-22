@@ -1,4 +1,5 @@
 /* Import node's http module: */
+var fs = require('fs');
 var express = require('express');
 var app = express();
 
@@ -17,6 +18,34 @@ var makeID = function () {
 
     return text;
 }
+
+// On initial load, let's check if our chat history exists 
+// and load it into memory.
+var tempArray = fs.readFileSync('chat_history.json').toString().split("\n");
+for (var i = 0; i < tempArray.length; i++) {
+  jsonArray = JSON.parse(tempArray[i])
+  console.log(jsonArray)
+  var tempObj = {
+    objectId: jsonArray.objectId,
+    username: jsonArray.username,
+    message: jsonArray.message
+  }
+  messages.results.push(tempObj);  
+  
+  console.log(messages);
+  //console.log(JSON.parse(tempArray[i]));
+}
+
+//console.log(tempArray);
+
+// fs.readFile('chat_history.json', function (err, data) {
+//   if (err) throw err;
+//   var obj = data.toString();
+//   var objParsed = JSON.parse(obj);
+//   console.log(objParsed);
+
+//   // Parse data.
+// });
 
 app.use('/chatterbox', express.static('../client'));
 
@@ -41,6 +70,13 @@ app.post('/classes/messages', function (req, res) {
       message: objParsed.message
     }
     messages.results.push(tempObj);
+  
+    // Create an stringified JSON object with line breaks that we can save to our file system.
+    var objToSave = JSON.stringify(tempObj) + '\n';
+    // Attempting to write our chats to a persistant file.
+    fs.appendFile('chat_history.json', objToSave, function (err) {
+      console.log(err);
+    }); 
   });
   
   res.sendStatus(201)
@@ -48,13 +84,10 @@ app.post('/classes/messages', function (req, res) {
 
 });
 
-
 var server = app.listen(3000, function () {
   var port = server.address().port;
   console.log('Listening on port: %s', port);
 });
-
-
 
 
 

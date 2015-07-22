@@ -35,7 +35,6 @@ var Messages = Backbone.Collection.extend({
     //   results.push(response[key]);
     // }
     for( var i = response.results.length-1; i >= 0; i-- ){
-
       if(response.results[i].message.slice(-3) === 'gif' || response.results[i].message.slice(-3) === 'jpg') {
         response.results[i].message = '<img src="'+response.results[i].message+'" />'; 
       } else {
